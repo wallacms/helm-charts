@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  powerdns-sqlite3:
+  - apiVersion: v2
+    appVersion: 4.9.0
+    created: "2025-01-06T02:22:35.70765231Z"
+    description: A Helm chart for PowerDNS with SQLite3 backend
+    digest: aa8176e201b4b4a4538305bc5c612956c0ae25dd2b14727e992b8088b6b84016
+    name: powerdns-sqlite3
+    urls:
+    - https://github.com/wallacms/helm-charts/releases/download/powerdns-sqlite3-0.2.0/powerdns-sqlite3-0.2.0.tgz
+    version: 0.2.0
+generated: "2025-01-06T02:22:35.707658602Z"
