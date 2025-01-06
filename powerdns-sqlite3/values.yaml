@@ -8,13 +8,13 @@ image:
 service:
   type: LoadBalancer
   dnsPort: 53
-  webAdminPort: 8081
+  webAdminPort: 8082
 
 persistence:
   enabled: true
   storageClass: ""
   accessMode: ReadWriteOnce
-  size: 1Gi
+  size: 2Gi
 
 config:
   apiKey: PowerDNSAPI
