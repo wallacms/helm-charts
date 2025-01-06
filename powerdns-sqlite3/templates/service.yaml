@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "powerdns-sqlite3.fullname" . }}
+  labels:
+    {{- include "powerdns-sqlite3.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.dnsPort }}
+      targetPort: dns
+      protocol: UDP
+      name: dns
+    - port: {{ .Values.service.dnsPort }}
+      targetPort: dns-tcp
+      protocol: TCP
+      name: dns-tcp
+    - port: {{ .Values.service.webAdminPort }}
+      targetPort: web-admin
+      protocol: TCP
+      name: web-admin
+  selector:
+    {{- include "powerdns-sqlite3.selectorLabels" . | nindent 4 }}

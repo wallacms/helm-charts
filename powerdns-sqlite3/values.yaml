@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: powerdns/pdns-auth-49
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  dnsPort: 53
+  webAdminPort: 8081
+
+persistence:
+  enabled: true
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+
+config:
+  apiKey: PowerDNSAPI
+  

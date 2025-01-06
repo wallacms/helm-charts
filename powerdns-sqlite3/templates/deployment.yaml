@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "powerdns-sqlite3.fullname" . }}
+  labels:
+    {{- include "powerdns-sqlite3.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "powerdns-sqlite3.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "powerdns-sqlite3.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "powerdns-sqlite3.fullname" . }}-api-key 
+                  key: api-key
+          ports:
+            - name: dns
+              containerPort: 53
+              protocol: UDP
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+            - name: web-admin
+              containerPort: 8081
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /etc/powerdns/pdns.conf
+              subPath: pdns.conf
+            - name: data
+              mountPath: /var/lib/powerdns
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "powerdns-sqlite3.fullname" . }}-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "powerdns-sqlite3.fullname" . }}-data
